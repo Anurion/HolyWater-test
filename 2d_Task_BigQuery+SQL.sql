@@ -27,6 +27,7 @@ select a.id, a.invoices_id
 ,o.operation
 from `holywater-test-task.solidtest.solid_invoices` a, unnest(orders) o;
 
+-- 3
 -- conversion by product
 create table solidtest.solid_conversion as
 select product_id, sum(not_1_invoice)/count(a.id) conversion
@@ -54,6 +55,7 @@ from `holywater-test-task.solidtest.solid_invoices` a
 where a.status = 'success'
 group by a.id);
 
+-- 4
 -- LTV
 create table solidtest.solid_overall_ltv as
 select (avg(mrr) * avg(avg_sub_life))/avg(avg_active_subs) LTV
@@ -65,7 +67,7 @@ from
 from `holywater-test-task.solidtest.solid`
 group by DATE_TRUNC(started_at, month));
 
--- create table solidtest.solid_ltv as
+create table solidtest.solid_ltv as
 select product_id
 ,(avg(mrr) * avg(avg_sub_life))/avg(avg_active_subs) LTV
 from
@@ -78,5 +80,5 @@ from `holywater-test-task.solidtest.solid`
 group by DATE_TRUNC(started_at, month), product.id)
 group by product_id;
 
-
+--5 :(
 
